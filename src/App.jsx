@@ -3,6 +3,7 @@ import Header from './components/Header'
 import Automata from './assets/Autamata.svg'
 import like from './assets/si.png'
 import dislike from './assets/no.png'
+import { MagicMotion, MagicExit } from 'react-magic-motion'
 
 export default function App() {
   const [expression, setExpression] = useState('')
@@ -43,10 +44,11 @@ export default function App() {
             </TextG>
             <img src={Automata} alt="error" className="p-4 h-52 w-full" />
           </div>
-
-          <Tabla
-            arr={value ? expression.match(/([0-9]+|[\+\-\*\/])/g) : null}
-          />
+          <MagicMotion>
+            <Tabla
+              arr={value ? expression.match(/([0-9]+|[\+\-\*\/])/g) : null}
+            />
+          </MagicMotion>
         </section>
 
         {/* sección 2 */}
@@ -161,25 +163,46 @@ const Tabla = ({ arr }) => {
     '*': 'OPERADOR',
     '/': 'OPERADOR',
   }
-
-  if (!arr) return <></>
   return (
-    <table className="table-auto text-center border border-green-800 bg-gray-50 shadow-xl">
-      <thead className="border-b border-green-800">
-        <tr className="bg-gradient-to-r from-teal-600 to-green-400 text-white ">
-          <th>Componente</th>
-          <th className="border-l border-green-800">Token</th>
-        </tr>
-      </thead>
-      <tbody>
-        {arr.map((e, i) => (
-          <tr key={e + '' + i} className={i % 2 ? 'bg-teal-100' : ''}>
-            <td className="border-r border-green-800">{e}</td>
-            <td>{a[e]}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <MagicMotion>
+      <MagicExit
+        initial={{ opacity: 0, y: -20 }}
+        animate={{
+          opacity: 1,
+          y: 0,
+          transition: { y: { type: 'spring', damping: 12, stiffness: 120 } },
+        }}
+        exit={{
+          opacity: 0,
+          y: -20,
+          transition: {
+            opacity: { duration: 0.175 },
+            y: { duration: 0.25 },
+          },
+        }}
+      >
+        {!arr ? (
+          <div>Esperando expresión...</div>
+        ) : (
+          <table className="table-auto text-center border border-green-800 bg-gray-50 shadow-xl">
+            <thead className="border-b border-green-800">
+              <tr className="bg-gradient-to-r from-teal-600 to-green-400 text-white ">
+                <th>Componente</th>
+                <th className="border-l border-green-800">Token</th>
+              </tr>
+            </thead>
+            <tbody>
+              {arr.map((e, i) => (
+                <tr key={e + '' + i} className={i % 2 ? 'bg-teal-100' : ''}>
+                  <td className="border-r border-green-800">{e}</td>
+                  <td>{a[e]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </MagicExit>
+    </MagicMotion>
   )
 }
 
