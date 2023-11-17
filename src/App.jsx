@@ -109,22 +109,47 @@ export default function App() {
                     value ? correctColor : incorrectColor
                   }`}
                 >
-                  {expression == '' ? (
-                    <></>
-                  ) : isCorrect ? (
-                    <>
-                      <p>La cadena es correcta</p>
-                      <img src={like} alt="Correct" className="w-32 mx-auto " />
-                    </>
-                  ) : (
-                    <>
-                      <p>La cadena es incorrecta</p>
-                      <img
-                        src={dislike}
-                        alt="Incorrect"
-                        className="w-32 mx-auto"
-                      />
-                    </>
+                  {expression && (
+                    <MagicMotion>
+                      <MagicExit
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{
+                          opacity: 1,
+                          y: 0,
+                          transition: {
+                            y: { type: 'spring', damping: 12, stiffness: 120 },
+                          },
+                        }}
+                        exit={{
+                          opacity: 0,
+                          y: -20,
+                          transition: {
+                            opacity: { duration: 0.175 },
+                            y: { duration: 0.25 },
+                          },
+                        }}
+                      >
+                        {isCorrect ? (
+                          <div>
+                            <p>La cadena es correcta</p>
+                            <img
+                              src={like}
+                              alt="Correct"
+                              className="w-32 mx-auto "
+                            />
+                          </div>
+                        ) : (
+                          <div>
+                            <p>La cadena es incorrecta</p>
+                            <img
+                              src={dislike}
+                              alt="Incorrect"
+                              className="w-32 mx-auto"
+                            />
+                          </div>
+                        )}
+                      </MagicExit>
+                    </MagicMotion>
                   )}
                 </div>
               </div>
