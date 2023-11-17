@@ -1,33 +1,36 @@
-import { useState } from "react";
-import Header from "./components/Header";
-import Automata from "./assets/Autamata.svg";
-import like from "./assets/si.png";
-import dislike from "./assets/no.png";
+import { useState } from 'react'
+import Header from './components/Header'
+import Automata from './assets/Autamata.svg'
+import like from './assets/si.png'
+import dislike from './assets/no.png'
 
 export default function App() {
-  const [expression, setExpression] = useState("");
-  const [value, setValue] = useState(false);
-  const [isCorrect, setIsCorrect] = useState(false);
+  const [expression, setExpression] = useState('')
+  const [value, setValue] = useState(false)
+  const [isCorrect, setIsCorrect] = useState(false)
 
-  const regex = /^[0-9]((\+|\-|\/|\*)[0-9])+$/;
+  const regex = /^[0-9]((\+|\-|\/|\*)[0-9])+$/
 
   const updateExpression = (e) => {
-    const inputValue = e.target.value;
-    const isValidExpression = regex.test(inputValue);
-    setValue(isValidExpression);
-    setExpression(inputValue);
-    setIsCorrect(isValidExpression);
-  };
+    const inputValue = e.target.value
+    const isValidExpression = regex.test(inputValue)
+    setValue(isValidExpression)
+    setExpression(inputValue)
+    setIsCorrect(isValidExpression)
+  }
 
-  const correctColor = "text-blue-600";
-  const incorrectColor = "text-red-600";
+  const correctColor = 'text-blue-600'
+  const incorrectColor = 'text-red-600'
 
   return (
-    <div className="font-Montserrat flex flex-col h-screen w-screen bg-gray-300 ">
+    <div className="font-Outfit flex flex-col h-screen w-screen bg-gray-300 ">
       <Header />
       <main className="grow p-2 flex gap-2 overflow-clip">
         {/* Sección 1 */}
-        <section className="w-1/3 bg-gray-50 h-full rounded-md p-5 flex flex-col overflow-y-auto">
+        <section
+          className="w-1/3 bg-gray-50 h-full rounded-md p-5 flex flex-col overflow-y-auto will-change-contents"
+          style={{ scrollbarGutter: 'stable' }}
+        >
           <div className="py-5">
             <TextG className="from-orange-600 to-rose-100 text-3xl font-semibold">
               Expresión
@@ -52,76 +55,83 @@ export default function App() {
             {/* anim */}
             <div
               className={`absolute top-0 left-0 rounded-2xl h-full w-full scale-110 overflow-clip transition-all z-10 ${
-                value ? "opacity-100" : "opacity-30"
+                value ? 'opacity-100' : 'opacity-30'
               }`}
             >
               <div className="relative w-full h-full">
                 <Cuadrado>
                   <Circle
                     className="from-red-400 to-yellow-300  animate-spin"
-                    style={{ animationDuration: "4s" }}
+                    style={{ animationDuration: '4s' }}
                   />
                 </Cuadrado>
                 <Cuadrado className="rotate-90">
                   <Circle
                     className="from-teal-400 to-purple-400 animate-spin"
-                    style={{ animationDuration: "3s" }}
+                    style={{ animationDuration: '3s' }}
                   />
                 </Cuadrado>
                 <Cuadrado className="-rotate-90">
                   <Circle
                     className="from-orange-400 to-fuchsia-300 animate-spin"
-                    style={{ animationDuration: "2s" }}
+                    style={{ animationDuration: '2s' }}
                   />
                 </Cuadrado>
                 <Cuadrado className="rotate-180">
                   <Circle
                     className="from-blue-500 to-red-500 animate-spin"
-                    style={{ animationDuration: "3s" }}
+                    style={{ animationDuration: '3s' }}
                   />
                 </Cuadrado>
               </div>
             </div>
 
             <form
-              className="absolute border p-5  h-full w-full z-20 bg-gray-200 border-gray-400 rounded-xl shadow-xl"
+              className="absolute border p-5  h-full w-full z-20 bg-gray-200 border-gray-400 rounded-xl shadow-xl text-center flex"
               onSubmit={(e) => e.preventDefault()}
             >
               {/* colores */}
-              <label className="label text-4xl font-Outfit mb-5">
+              <label className="label text-4xl font-Outfit w-1/2 flex flex-col justify-center  py-10  items-center border-r-2 border-gray-300 p-2">
                 Expresión a evaluar
                 <input
                   type="text"
-                  className="txt text-xl font-Outfit"
+                  className="txt text-xl font-Outfit mt-5"
                   autoComplete="off"
                   onChange={updateExpression}
                 />
               </label>
-              <span className="text-3xl font-Outfit"> {expression}</span>
-              <br />
-              <div className="mt-5">
-                <label
+
+              <div className="w-1/2 flex flex-col justify-center items-center">
+                <p
                   className={`text-4xl font-Outfit mt-6 ${
                     value ? correctColor : incorrectColor
                   }`}
                 >
-                  {isCorrect
-                    ? "La expresión es correcta"
-                    : "La expresión es incorrecta"}
-                </label>
-                {isCorrect && (
-                  <img src={like} alt="Correct" className="w-60 h-60" />
-                )}
-                {!isCorrect && (
-                  <img src={dislike} alt="Incorrect" className="w-60 h-60" />
-                )}
+                  {expression == '' ? (
+                    <></>
+                  ) : isCorrect ? (
+                    <>
+                      <p>La expresión es correcta</p>
+                      <img src={like} alt="Correct" className="w-32 mx-auto " />
+                    </>
+                  ) : (
+                    <>
+                      <p>La expresión es incorrecta</p>
+                      <img
+                        src={dislike}
+                        alt="Incorrect"
+                        className="w-32 mx-auto"
+                      />
+                    </>
+                  )}
+                </p>
               </div>
             </form>
           </div>
         </section>
       </main>
     </div>
-  );
+  )
 }
 
 const TextG = ({ children, className }) => {
@@ -131,28 +141,28 @@ const TextG = ({ children, className }) => {
     >
       {children}
     </p>
-  );
-};
+  )
+}
 
 const Tabla = ({ arr }) => {
   const a = {
-    0: "NUMERO",
-    1: "NUMERO",
-    2: "NUMERO",
-    3: "NUMERO",
-    4: "NUMERO",
-    5: "NUMERO",
-    6: "NUMERO",
-    7: "NUMERO",
-    8: "NUMERO",
-    9: "NUMERO",
-    "+": "OPERADOR",
-    "-": "OPERADOR",
-    "*": "OPERADOR",
-    "/": "OPERADOR",
-  };
+    0: 'NUMERO',
+    1: 'NUMERO',
+    2: 'NUMERO',
+    3: 'NUMERO',
+    4: 'NUMERO',
+    5: 'NUMERO',
+    6: 'NUMERO',
+    7: 'NUMERO',
+    8: 'NUMERO',
+    9: 'NUMERO',
+    '+': 'OPERADOR',
+    '-': 'OPERADOR',
+    '*': 'OPERADOR',
+    '/': 'OPERADOR',
+  }
 
-  if (!arr) return <></>;
+  if (!arr) return <></>
   return (
     <table className="table-auto text-center border border-green-800 bg-gray-50 shadow-xl">
       <thead className="border-b border-green-800">
@@ -163,15 +173,15 @@ const Tabla = ({ arr }) => {
       </thead>
       <tbody>
         {arr.map((e, i) => (
-          <tr key={e + "" + i} className={i % 2 ? "bg-teal-100" : ""}>
+          <tr key={e + '' + i} className={i % 2 ? 'bg-teal-100' : ''}>
             <td className="border-r border-green-800">{e}</td>
             <td>{a[e]}</td>
           </tr>
         ))}
       </tbody>
     </table>
-  );
-};
+  )
+}
 
 const Circle = ({ className, style }) => {
   return (
@@ -179,8 +189,8 @@ const Circle = ({ className, style }) => {
       className={`bg-gradient-to-tr h-1/2 w-1/2 rounded-full animate-bounce blur-2xl mix-blend-multiply absolute bottom-0  ${className}`}
       style={style}
     ></div>
-  );
-};
+  )
+}
 const Cuadrado = ({ children, className, style }) => {
   return (
     <div
@@ -189,8 +199,8 @@ const Cuadrado = ({ children, className, style }) => {
     >
       {children}
     </div>
-  );
-};
+  )
+}
 
 const Anim = ({ className }) => {
   return (
@@ -200,29 +210,29 @@ const Anim = ({ className }) => {
       <div className="relative h-full w-full">
         <Cuadrado>
           <Circle
-            style={{ animationDuration: "3s" }}
+            style={{ animationDuration: '3s' }}
             className="from-red-400 to-yellow-300"
           />
         </Cuadrado>
         <Cuadrado className="rotate-90">
           <Circle
-            style={{ animationDuration: "4s" }}
+            style={{ animationDuration: '4s' }}
             className="from-teal-400 to-purple-500"
           />
         </Cuadrado>
         <Cuadrado className="rotate-180">
           <Circle
-            style={{ animationDuration: "2s" }}
+            style={{ animationDuration: '2s' }}
             className="from-fuchsia-400 to-purple-400"
           />
         </Cuadrado>
         <Cuadrado className="-rotate-90">
           <Circle
-            style={{ animationDuration: "2.5s" }}
+            style={{ animationDuration: '2.5s' }}
             className="from-lime-200 to-lime-500"
           />
         </Cuadrado>
       </div>
     </div>
-  );
-};
+  )
+}
