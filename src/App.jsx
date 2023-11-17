@@ -1,13 +1,26 @@
 import { useState } from "react";
 import Header from "./components/Header";
 import Automata from "./assets/Autamata.svg";
+import like from "./assets/si.png";
+import dislike from "./assets/no.png";
 
 export default function App() {
   const [expression, setExpression] = useState("");
+  const [value, setValue] = useState(false);
+  const [isCorrect, setIsCorrect] = useState(false);
 
   const regex = /^[0-9]((\+|\-|\/|\*)[0-9])+$/;
-  const value = regex.test(expression);
-  console.log(expression.match(/([0-9]+|[\+\-\*\/])/g));
+
+  const updateExpression = (e) => {
+    const inputValue = e.target.value;
+    const isValidExpression = regex.test(inputValue);
+    setValue(isValidExpression);
+    setExpression(inputValue);
+    setIsCorrect(isValidExpression);
+  };
+
+  const correctColor = "text-blue-600";
+  const incorrectColor = "text-red-600";
 
   return (
     <div className="font-Montserrat flex flex-col h-screen w-screen bg-gray-300 ">
@@ -75,20 +88,34 @@ export default function App() {
               onSubmit={(e) => e.preventDefault()}
             >
               {/* colores */}
-              <label className="label">
+              <label className="label text-4xl font-Outfit mb-5">
                 Expresión a evaluar
                 <input
                   type="text"
-                  className="txt"
+                  className="txt text-xl font-Outfit"
                   autoComplete="off"
-                  onChange={(e) => setExpression(e.target.value)}
+                  onChange={updateExpression}
                 />
               </label>
-              {expression}
+              <span className="text-3xl font-Outfit"> {expression}</span>
               <br />
-              {value
-                ? "La expresión es correcta"
-                : "La expresión es incorrecta"}
+              <div className="mt-5">
+                <label
+                  className={`text-4xl font-Outfit mt-6 ${
+                    value ? correctColor : incorrectColor
+                  }`}
+                >
+                  {isCorrect
+                    ? "La expresión es correcta"
+                    : "La expresión es incorrecta"}
+                </label>
+                {isCorrect && (
+                  <img src={like} alt="Correct" className="w-60 h-60" />
+                )}
+                {!isCorrect && (
+                  <img src={dislike} alt="Incorrect" className="w-60 h-60" />
+                )}
+              </div>
             </form>
           </div>
         </section>
