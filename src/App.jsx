@@ -34,7 +34,7 @@ export default function App() {
         >
           <div className="py-5">
             <TextG className="from-orange-600 to-rose-100 text-3xl font-semibold">
-              Expresión
+              Expresión Regular
             </TextG>
             <p className="bg-gray-50 text-2xl">{String.raw`/^[0-9]((\+|\-|\/|\*)[0-9])+$/`}</p>
           </div>
@@ -56,14 +56,14 @@ export default function App() {
           <div className="w-1/2 h-1/2 absolute">
             {/* anim */}
             <div
-              className={`absolute top-0 left-0 rounded-2xl h-full w-full scale-110 overflow-clip transition-all z-10 ${
-                value ? 'opacity-100' : 'opacity-30'
+              className={`absolute top-0 left-0 rounded-2xl h-full w-full overflow-clip transition-all z-10 ${
+                value ? 'opacity-100 scale-110' : 'opacity-30 scale-105'
               }`}
             >
-              <div className="relative w-full h-full">
+              <div className="relative w-full h-full ">
                 <Cuadrado>
                   <Circle
-                    className="from-red-400 to-yellow-300  animate-spin"
+                    className="from-emerald-400 to-green-500  animate-spin"
                     style={{ animationDuration: '4s' }}
                   />
                 </Cuadrado>
@@ -75,14 +75,14 @@ export default function App() {
                 </Cuadrado>
                 <Cuadrado className="-rotate-90">
                   <Circle
-                    className="from-orange-400 to-fuchsia-300 animate-spin"
-                    style={{ animationDuration: '2s' }}
+                    className="from-purple-500 to-fuchsia-300 animate-spin"
+                    style={{ animationDuration: '3.5s' }}
                   />
                 </Cuadrado>
                 <Cuadrado className="rotate-180">
                   <Circle
-                    className="from-blue-500 to-red-500 animate-spin"
-                    style={{ animationDuration: '3s' }}
+                    className="from-blue-400 to-red-700 animate-spin"
+                    style={{ animationDuration: '4s' }}
                   />
                 </Cuadrado>
               </div>
@@ -94,7 +94,7 @@ export default function App() {
             >
               {/* colores */}
               <label className="label text-4xl font-Outfit w-1/2 flex flex-col justify-center  py-10  items-center border-r-2 border-gray-300 p-2">
-                Expresión a evaluar
+                Cadena a evaluar
                 <input
                   type="text"
                   className="txt text-xl font-Outfit mt-5"
@@ -104,7 +104,7 @@ export default function App() {
               </label>
 
               <div className="w-1/2 flex flex-col justify-center items-center">
-                <p
+                <div
                   className={`text-4xl font-Outfit mt-6 ${
                     value ? correctColor : incorrectColor
                   }`}
@@ -113,12 +113,12 @@ export default function App() {
                     <></>
                   ) : isCorrect ? (
                     <>
-                      <p>La expresión es correcta</p>
+                      <p>La cadena es correcta</p>
                       <img src={like} alt="Correct" className="w-32 mx-auto " />
                     </>
                   ) : (
                     <>
-                      <p>La expresión es incorrecta</p>
+                      <p>La cadena es incorrecta</p>
                       <img
                         src={dislike}
                         alt="Incorrect"
@@ -126,7 +126,7 @@ export default function App() {
                       />
                     </>
                   )}
-                </p>
+                </div>
               </div>
             </form>
           </div>
